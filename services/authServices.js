@@ -19,7 +19,9 @@ exports.signup = asyncHandler(async (req, res, next) => {
   const password = await bcrypt.hash(req.body.password, 12);
   const newUser = await User.create({ ...req.body, password });
   const token = generateToken(newUser._id);
-  return res.status(201).json({ message: "created successfully", token });
+  return res
+    .status(201)
+    .json({ message: "created successfully", token, data: newUser });
 });
 
 exports.login = asyncHandler(async (req, res, next) => {

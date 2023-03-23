@@ -15,16 +15,15 @@ exports.createPost = asyncHandler(async (req, res, next) => {
 });
 
 exports.getAllPosts = asyncHandler(async (req, res, next) => {
-  const page = req.query.page * 1 || 1;
-  const limit = req.query.limit * 1 || 10;
-  const skip = (page - 1) * limit;
-  const posts = await Posts.find().skip(skip).limit(limit);
+  // const page = req.query.page * 1 || 1;
+  // const limit = req.query.limit * 1 || 10;
+  // const skip = (page - 1) * limit;
+  const posts = await Posts.find();
   if (posts.length === 0) {
     return next(new ApiError("oops no posts found", 200));
   }
   res.status(200).json({
     result: posts.length,
-    page,
     data: posts,
   });
 });
