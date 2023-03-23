@@ -10,7 +10,6 @@ const postSchema = new mongoose.Schema(
     content: {
       type: String,
       required: [true, "content is required"],
-      maxLength: [100, "too long content"],
     },
     photo: String,
     user: {

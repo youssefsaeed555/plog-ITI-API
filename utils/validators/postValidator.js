@@ -11,7 +11,6 @@ exports.createPostValidator = [
   check("content")
     .notEmpty()
     .withMessage("title of post is required")
-    .isLength({ max: 100 }),
   validatorMiddleware,
 ];
 
