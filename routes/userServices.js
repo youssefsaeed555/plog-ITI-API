@@ -22,7 +22,7 @@ routes
 
 routes
   .route("/updatePhoto")
-  .put(uploadSingle("profileImg"), protect, updatePhoto);
+  .put(protect, uploadSingle("profileImg"), updatePhoto);
 
 routes.route("/getMe").get(protect, getLoggedUser);
 
