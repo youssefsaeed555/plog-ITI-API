@@ -29,4 +29,9 @@ postSchema.pre(/^find/, function (next) {
   next();
 });
 
+postSchema.post("save", async function (doc, next) {
+  await doc.populate({ path: "user", select: "-password" });
+  next();
+});
+
 module.exports = mongoose.model("Posts", postSchema);

@@ -8,9 +8,7 @@ exports.createPostValidator = [
     .withMessage("title of post is required")
     .isLength({ min: 8 })
     .withMessage("Too short post title"),
-  check("content")
-    .notEmpty()
-    .withMessage("title of post is required")
+  check("content").notEmpty().withMessage("title of post is required"),
   validatorMiddleware,
 ];
 
