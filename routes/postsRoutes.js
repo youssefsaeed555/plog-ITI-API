@@ -38,8 +38,8 @@ routes
   .put(upload.uploadSingle("photo"), updatePostValidator, protect, updatePost)
   .delete(deletePostValidator, protect, deletePost);
 
-routes
-  .route("/updatePhoto/:id")
-  .put(protect, upload.uploadSingle("photo"), updatePhoto);
+// routes
+//   .route("/updatePhoto/:id")
+//   .put(protect, upload.uploadSingle("photo"), updatePhoto);
 
 module.exports = routes;
