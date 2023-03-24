@@ -15,9 +15,6 @@ exports.createPost = asyncHandler(async (req, res, next) => {
 });
 
 exports.getAllPosts = asyncHandler(async (req, res, next) => {
-  // const page = req.query.page * 1 || 1;
-  // const limit = req.query.limit * 1 || 10;
-  // const skip = (page - 1) * limit;
   const posts = await Posts.find();
   if (posts.length === 0) {
     return next(new ApiError("oops no posts found", 200));
@@ -47,12 +44,23 @@ exports.getLoggedUserPosts = asyncHandler(async (req, res, next) => {
 
 exports.updatePost = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
-  const post = await Posts.findByIdAndUpdate({ _id: id }, req.body, {
-    new: true,
-  });
+  const { title, content } = req.body;
+  const post = await Posts.findById(id);
   if (!post) {
     return next(new ApiError(`No post for this id ${id} `, 404));
   }
+  if (req.file) {
+    const result = await cloud.uploads(req.file.path, "posts");
+    post.photo = result.url;
+    await fs.unlink(req.file.path);
+  }
+  if (title) {
+    post.title = title;
+  }
+  if (content) {
+    post.content = content;
+  }
+  await post.save();
   res.status(200).json({ data: post });
 });
 
@@ -66,7 +74,7 @@ exports.deletePost = asyncHandler(async (req, res, next) => {
   res.status(204).send();
 });
 
-exports.updatePhoto = asyncHandler(async (req, res, next) => {
+/*exports.updatePhoto = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
 
   const post = await Posts.findById(id);
@@ -87,3 +95,4 @@ exports.updatePhoto = asyncHandler(async (req, res, next) => {
     .status(200)
     .json({ message: "photo update successfully", photo: result.url });
 });
+*/

@@ -35,7 +35,7 @@ routes.get("/getMyPosts", getLoggedUserPosts);
 routes
   .route("/:id")
   .get(getPostValidator, getPost)
-  .put(updatePostValidator, protect, updatePost)
+  .put(upload.uploadSingle("photo"), updatePostValidator, protect, updatePost)
   .delete(deletePostValidator, protect, deletePost);
 
 routes
