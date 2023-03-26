@@ -28,13 +28,8 @@ exports.updatePhoto = asyncHandler(async (req, res, next) => {
   const result = await cloud.uploads(req.file.path, "users");
 
   const user = await User.findById(req.user._id);
-  if (user.profileImg) {
-    await cloud.destroy(user.profileImgId);
-  }
 
   user.profileImg = result.url;
-  user.profileImgId = result.id;
-
   await user.save();
   await fs.unlink(req.file.path);
 
