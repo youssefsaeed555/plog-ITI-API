@@ -33,7 +33,9 @@ exports.updatePhoto = asyncHandler(async (req, res, next) => {
   await user.save();
   await fs.unlink(req.file.path);
 
-  return res.status(200).json({ message: "photo update successfully" });
+  return res
+    .status(200)
+    .json({ message: "photo update successfully", profileImg: result.url });
 });
 
 //desc Get logged user
