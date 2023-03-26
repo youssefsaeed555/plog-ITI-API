@@ -42,9 +42,5 @@ exports.validateUpdateLoggedUser = [
       }
       return true;
     }),
-  check("phone")
-    .optional()
-    .isMobilePhone("ar-EG")
-    .withMessage("input valid egyptian phone"),
   validator,
 ];
