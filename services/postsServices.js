@@ -39,7 +39,10 @@ exports.getLoggedUserPosts = asyncHandler(async (req, res, next) => {
   if (userPosts.length === 0) {
     return next(new ApiError(`no posts for this user`, 200));
   }
-  return res.status(200).json({ numOfPosts: userPosts.length, userPosts });
+  res.status(200).json({
+    result: userPosts.length,
+    data: userPosts,
+  });
 });
 
 exports.updatePost = asyncHandler(async (req, res, next) => {
