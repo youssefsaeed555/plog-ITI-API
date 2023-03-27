@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
   changePasswordAt: Date,
   passwordCodeReset: String,
   passwordCodeResetExpire: Date,
-  isVerified: Boolean,
+  isVerified: { type: Boolean, default: false },
 });
 
 userSchema.pre(/^find/, function (next) {
