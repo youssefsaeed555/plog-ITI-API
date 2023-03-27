@@ -146,7 +146,7 @@ exports.verifyCode = asyncHandler(async (req, res, next) => {
 exports.resetPassword = asyncHandler(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
   if (!user) {
-    return next(new ApiError("there is no user with this email", 404));
+    return next(new ApiError("there is no user with this email", 200));
   }
   if (user.isVerified === false) {
     return next(new ApiError("reset code not verified", 400));
