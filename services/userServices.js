@@ -5,6 +5,7 @@ const User = require("../models/users");
 const generateToken = require("../utils/generateToken");
 const ApiError = require("../utils/ApiError");
 const cloud = require("../utils/cloudinary");
+const Post = require("../models/posts");
 
 exports.changePassword = asyncHandler(async (req, res, next) => {
   const user = await User.findOneAndUpdate(
@@ -49,11 +50,13 @@ exports.getLoggedUser = asyncHandler(async (req, res, next) => {
 
 //Delete logged user
 exports.deleteUser = asyncHandler(async (req, res, next) => {
+  const userId = req.user._id;
   const user = await User.findByIdAndDelete(req.user._id);
-
   if (!user) {
     return next(new ApiError(`There is no user to delete`, 404));
   }
+  // Find all posts associated with the user and delete them
+  await Post.deleteMany({ user: userId });
   res.status(204).send();
 });
 

@@ -15,7 +15,7 @@ exports.createPost = asyncHandler(async (req, res, next) => {
 });
 
 exports.getAllPosts = asyncHandler(async (req, res, next) => {
-  const posts = await Posts.find();
+  const posts = await Posts.find().sort("-createdAt");
   if (posts.length === 0) {
     return next(new ApiError("oops no posts found", 200));
   }
