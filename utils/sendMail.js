@@ -14,7 +14,7 @@ const sendMail = async (options) => {
 
   //mailOptions
   const mailOptions = {
-    from: `HandMade <${process.env.EMAIL_USER}>`,
+    from: `Plog_ITI <${process.env.EMAIL_USER}>`,
     to: options.email,
     subject: options.subject,
     text: options.message,
