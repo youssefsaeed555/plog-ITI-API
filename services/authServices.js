@@ -188,6 +188,6 @@ exports.verifyGoogleAuth = asyncHandler(async (req, res, next) => {
     const token = generateToken(newUser._id);
     return res
       .status(201)
-      .json({ message: "login successfully", token, user: newUser });
+      .json({ message: "login success", token, user: newUser });
   }
 });
