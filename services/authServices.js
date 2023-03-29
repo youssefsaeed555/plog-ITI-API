@@ -166,3 +166,28 @@ exports.resetPassword = asyncHandler(async (req, res, next) => {
     .status(200)
     .json({ message: "update password successfully", token, user });
 });
+
+exports.verifyGoogleAuth = asyncHandler(async (req, res, next) => {
+  const { googleToken } = req.body;
+  if (!googleToken) {
+    return next(new ApiError("login failed", 400));
+  }
+  const decode = jwt.decode(googleToken);
+  const checkUser = await User.findOne({ email: decode.email });
+  if (checkUser) {
+    const token = generateToken(checkUser._id);
+    return res
+      .status(200)
+      .json({ message: "login success", user: checkUser, token });
+  } else {
+    const newUser = await User.create({
+      email: decode.email,
+      userName: decode.name,
+      profileImg: decode.picture,
+    });
+    const token = generateToken(newUser._id);
+    return res
+      .status(201)
+      .json({ message: "login successfully", token, user: newUser });
+  }
+});

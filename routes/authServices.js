@@ -8,6 +8,7 @@ const {
   forgetPassword,
   verifyCode,
   resetPassword,
+  verifyGoogleAuth,
 } = require("../services/authServices");
 
 const {
@@ -28,5 +29,7 @@ routes.route("/forgetPassword").post(forgetPassword);
 routes.route("/verifyCode").post(verifyCode);
 
 routes.route("/resetPassword").put(resetPassword);
+
+routes.route("/googleLogin").post(verifyGoogleAuth);
 
 module.exports = routes;
